@@ -1,0 +1,28 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+- repo: git://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.48.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
+  hooks:
+    - id: terraform_fmt
+    - id: terraform_docs
+    - id: terraform_validate
+
+# These two hooks are flakey, disabling for now
+#    - id: terraform_tfsec
+#    - id: checkov
+
+  # The revision doesn't get updated manually
+  # check this https://github.com/zricethezav/gitleaks/releases
+  # to see if there are newer versions
+-   repo: https://github.com/zricethezav/gitleaks
+    rev: v7.6.1
+    hooks:
+      -   id: gitleaks
