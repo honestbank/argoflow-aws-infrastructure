@@ -24,7 +24,7 @@ resource "aws_iam_policy" "aws_load_balancer_controller_policy" {
   name        = "aws_load_balancer_controller_policy"
   description = "IAM Policy allowing the AWS Load Balancer Controller to administer infrastructure resources"
 
-  policy = file(".../iam-policies/aws-load-balancer-controller.json")
+  policy = file("../iam-policies/aws-load-balancer-controller.json")
 }
 
 resource "aws_iam_role" "aws_load_balancer_controller_role" {
