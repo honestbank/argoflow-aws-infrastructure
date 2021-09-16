@@ -1,6 +1,16 @@
 # ###################################################################################################################
-# General
+# argoflow-aws-infrastructure input variables
 # ###################################################################################################################
+
+variable "aws_load_balancer_controller_namespace" {
+  description = "The Kubernetes namespace containing the aws-load-balancer-controller KSA (Kubernetes Service Account)"
+  default     = "kube-system"
+}
+
+variable "aws_load_balancer_controller_service_account_name" {
+  description = "The name of the aws-load-balancer-controller KSA (Kubernetes Service Account)"
+  default     = "aws-load-balancer-controller"
+}
 
 variable "aws_region" {
   description = "The AWS region in which to build resources"
