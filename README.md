@@ -45,3 +45,11 @@ The RDS needs to be provisioned into the same VPC as the Kubeflow EKS instance. 
 > 
 
 argoflow-aws requires IAM roles for various component/supporting applications. These can be found in [iam.tf](/iam.tf).
+
+## Authentication (`oauth2-proxy`)
+
+argoflow-aws uses [oath2-proxy](https://github.com/oauth2-proxy/oauth2-proxy) which requires setting up an OAuth Application.
+We currently use GCP for this. The settings required for [Setting up OAuth 2.0](https://support.google.com/cloud/answer/6158849) are:
+
+* Authorized JavaScript origins: FQDN/URL (eg. `https://argoflow-aws.test.honestbank.com`)
+* Authorized Redirect URIs: `https://argoflow-aws.test.honestbank.com/oauth2/callback`
