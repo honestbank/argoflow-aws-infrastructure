@@ -6,6 +6,8 @@ organized by cloud provider and product/service (this might not be the best grou
 Current usage is specific to [argoflow-aws](https://github.com/argoflow/argoflow-aws) so the requirements are very closely
 tied to those specified in [their readme](https://github.com/argoflow/argoflow-aws/blob/master/README.md).
 
+For detailed input and output variable information see the [core module readme](/terraform/README.md).
+
 ## Prerequisites
 
 This module assumes that you have a vanilla EKS cluster running in a VPC with private and/or public subnets. From that point

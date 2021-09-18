@@ -80,6 +80,7 @@ No modules.
 | [aws_iam_role_policy_attachment.external_secrets_role_policy_attachment](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_user.kubeflow_pipelines_user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy.kubeflow_pipelines_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy) | resource |
+| [aws_kms_key.kubeflow_secrets_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
 | [aws_secretsmanager_secret.kubeflow_secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
 | [random_id.kubeflow_oidc_cookie_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.secrets_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
@@ -96,6 +97,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_aws_eks_cluster_primary_security_group_id"></a> [aws\_eks\_cluster\_primary\_security\_group\_id](#input\_aws\_eks\_cluster\_primary\_security\_group\_id) | Corresponds to the `cluster_primary_security_group_id` [output variable of the AWS EKS Terraform module](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest?tab=outputs) | `string` | n/a | yes |
 | <a name="input_aws_load_balancer_controller_namespace"></a> [aws\_load\_balancer\_controller\_namespace](#input\_aws\_load\_balancer\_controller\_namespace) | The Kubernetes Namespace containing the aws-load-balancer-controller KSA (Kubernetes Service Account) | `string` | `"kube-system"` | no |
 | <a name="input_aws_load_balancer_controller_service_account_name"></a> [aws\_load\_balancer\_controller\_service\_account\_name](#input\_aws\_load\_balancer\_controller\_service\_account\_name) | The name of the aws-load-balancer-controller KSA (Kubernetes Service Account) | `string` | `"aws-load-balancer-controller"` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | The AWS region in which to build resources | `string` | n/a | yes |
