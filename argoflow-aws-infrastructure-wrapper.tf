@@ -1,6 +1,7 @@
 module "argoflow_aws_infrastructure" {
   source = "./terraform"
 
+  aws_eks_cluster_primary_security_group_id               = var.aws_eks_cluster_primary_security_group_id
   aws_load_balancer_controller_namespace                  = var.aws_load_balancer_controller_namespace
   aws_load_balancer_controller_service_account_name       = var.aws_load_balancer_controller_service_account_name
   aws_region                                              = var.aws_region

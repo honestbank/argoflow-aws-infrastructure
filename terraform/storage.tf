@@ -62,4 +62,6 @@ resource "aws_elasticache_cluster" "kubeflow_oidc_cache" {
   parameter_group_name = "default.redis6.x"
   engine_version       = "6.x"
   port                 = 6379
+
+  security_group_ids = [var.aws_eks_cluster_primary_security_group_id]
 }

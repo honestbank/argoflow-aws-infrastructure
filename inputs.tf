@@ -2,6 +2,11 @@
 # argoflow-aws-infrastructure input variables
 # ###################################################################################################################
 
+variable "aws_eks_cluster_primary_security_group_id" {
+  type        = string
+  description = "Corresponds to the `cluster_primary_security_group_id` [output variable of the AWS EKS Terraform module](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest?tab=outputs)"
+}
+
 variable "aws_load_balancer_controller_namespace" {
   type        = string
   description = "The Kubernetes Namespace containing the aws-load-balancer-controller KSA (Kubernetes Service Account)"
