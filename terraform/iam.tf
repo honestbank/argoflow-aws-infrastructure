@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "aws_load_balancer_controller_assume_role_policy_
     condition {
       test     = "StringEquals"
       variable = "${local.kubeflow_oidc_provider}:sub"
-      values   = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
+      values   = ["system:serviceaccount:${var.aws_load_balancer_controller_namespace}:${var.aws_load_balancer_controller_service_account_name}"]
     }
   }
 }
@@ -24,7 +24,7 @@ resource "aws_iam_policy" "aws_load_balancer_controller_policy" {
   name        = "aws_load_balancer_controller_policy"
   description = "IAM Policy allowing the AWS Load Balancer Controller to administer infrastructure resources"
 
-  policy = file("../iam-policies/aws-load-balancer-controller.json")
+  policy = file("${path.module}/../iam-policies/aws-load-balancer-controller.json")
 }
 
 resource "aws_iam_role" "aws_load_balancer_controller_role" {
@@ -129,7 +129,7 @@ resource "aws_iam_policy" "external_dns_policy" {
   name        = "external_dns_policy"
   description = "IAM Policy allowing the external-dns application to administer infrastructure resources"
 
-  policy = file("../iam-policies/external-dns.json")
+  policy = file("${path.module}/../iam-policies/external-dns.json")
 }
 
 resource "aws_iam_role" "external_dns_role" {
@@ -176,7 +176,7 @@ resource "aws_iam_policy" "cert_manager_policy" {
   name        = "cert_manager_policy"
   description = "IAM Policy allowing the cert_manager application to administer infrastructure resources"
 
-  policy = file("../iam-policies/cert-manager.json")
+  policy = file("${path.module}/../iam-policies/cert-manager.json")
 }
 
 resource "aws_iam_role" "cert_manager_role" {
@@ -221,7 +221,7 @@ resource "aws_iam_policy" "external_secrets_policy" {
   name        = "external_secrets_policy"
   description = "IAM Policy allowing the external-secrets application to administer infrastructure resources"
 
-  policy = file("../iam-policies/external-secrets-option-1.json")
+  policy = file("${path.module}/../iam-policies/external-secrets-option-1.json")
 }
 
 resource "aws_iam_role" "external_secrets_role" {
@@ -246,7 +246,7 @@ resource "aws_iam_policy" "external_secrets_argocd_policy" {
   name        = "external_secrets_argocd_policy"
   description = "IAM Policy allowing the external-secrets application to administer ArgoCD secrets"
 
-  policy = file("../iam-policies/external-secrets_argocd.json")
+  policy = file("${path.module}/../iam-policies/external-secrets_argocd.json")
 }
 
 resource "aws_iam_role" "external_secrets_argocd_role" {
@@ -271,7 +271,7 @@ resource "aws_iam_policy" "external_secrets_kubeflow_policy" {
   name        = "external_secrets_kubeflow_policy"
   description = "IAM Policy allowing the external-secrets application to administer kubeflow secrets"
 
-  policy = file("../iam-policies/external-secrets_kubeflow.json")
+  policy = file("${path.module}/../iam-policies/external-secrets_kubeflow.json")
 }
 
 resource "aws_iam_role" "external_secrets_kubeflow_role" {
@@ -296,7 +296,7 @@ resource "aws_iam_policy" "external_secrets_mlflow_policy" {
   name        = "external_secrets_mlflow_policy"
   description = "IAM Policy allowing the external-secrets application to administer mlflow secrets"
 
-  policy = file("../iam-policies/external-secrets_mlflow.json")
+  policy = file("${path.module}/../iam-policies/external-secrets_mlflow.json")
 }
 
 resource "aws_iam_role" "external_secrets_mlflow_role" {
@@ -321,7 +321,7 @@ resource "aws_iam_policy" "external_secrets_auth_policy" {
   name        = "external_secrets_auth_policy"
   description = "IAM Policy allowing the external-secrets application to administer auth secrets"
 
-  policy = file("../iam-policies/external-secrets_auth.json")
+  policy = file("${path.module}/../iam-policies/external-secrets_auth.json")
 }
 
 resource "aws_iam_role" "external_secrets_auth_role" {
@@ -346,7 +346,7 @@ resource "aws_iam_policy" "external_secrets_istio_policy" {
   name        = "external_secrets_istio_policy"
   description = "IAM Policy allowing the external-secrets application to administer istio secrets"
 
-  policy = file("../iam-policies/external-secrets_istio-system.json")
+  policy = file("${path.module}/../iam-policies/external-secrets_istio-system.json")
 }
 
 resource "aws_iam_role" "external_secrets_istio_role" {
@@ -371,7 +371,7 @@ resource "aws_iam_policy" "external_secrets_monitoring_policy" {
   name        = "external_secrets_monitoring_policy"
   description = "IAM Policy allowing the external-secrets application to administer monitoring secrets"
 
-  policy = file("../iam-policies/external-secrets_monitoring.json")
+  policy = file("${path.module}/../iam-policies/external-secrets_monitoring.json")
 }
 
 resource "aws_iam_role" "external_secrets_monitoring_role" {
@@ -405,7 +405,7 @@ resource "aws_iam_user_policy" "kubeflow_pipelines_user_policy" {
   name = "kubeflow_pipelines_user_policy"
   user = aws_iam_user.kubeflow_pipelines_user.name
 
-  policy = file("../iam-policies/pipelines-iam-user-s3-access.json")
+  policy = file("${path.module}/../iam-policies/pipelines-iam-user-s3-access.json")
 }
 
 resource "aws_iam_access_key" "kubeflow_pipelines_user_credentials" {

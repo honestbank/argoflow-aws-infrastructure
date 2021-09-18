@@ -30,14 +30,15 @@ resource "aws_db_instance" "kubeflow_db" {
   ### ---
   # TODO: randomize or secure this somehow
   username = "kubeflow"
-  password = "kubeflow"
+  password = "kubeflow" #tfsec:ignore:GEN003
 
   ### Storage
   ### ---
-  storage_type        = "gp2"
-  storage_encrypted   = true
-  allocated_storage   = 20
-  skip_final_snapshot = true
+  backup_retention_period = 30
+  storage_type            = "gp2"
+  storage_encrypted       = true
+  allocated_storage       = 20
+  skip_final_snapshot     = true
 
   ### Networking
   ### ---
@@ -51,6 +52,8 @@ resource "aws_db_instance" "kubeflow_db" {
 # Redis for OIDC
 # ######################################################################################################################
 
+# This cluster is used for OIDC - AWS088 warns on snapshot retention, which is not needed.
+# tfsec:ignore:AWS088 (DO NOT ADD A BLANK LINE AFTER THIS)
 resource "aws_elasticache_cluster" "kubeflow_oidc_cache" {
   cluster_id           = "kubeflow-oidc"
   engine               = "redis"

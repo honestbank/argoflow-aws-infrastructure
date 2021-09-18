@@ -12,7 +12,7 @@ func TestTerraformCodeInfrastructureInitialCredentials(t *testing.T) {
 	//stagePrefix := random.UniqueId() + "-"
 
 	// Copy to temp folder to isolate the main module from the existing Terraform state (.terraform folder)
-	terraformTempDir := test_structure.CopyTerraformFolderToTemp(t, "../terraform", "./")
+	terraformTempDir := test_structure.CopyTerraformFolderToTemp(t, "../", "terraform")
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformTempDir,
 		Vars: map[string]interface{}{},
@@ -23,4 +23,5 @@ func TestTerraformCodeInfrastructureInitialCredentials(t *testing.T) {
 
 	// Init Terraform - should always pass
 	terraform.Init(t, terraformOptions)
+	terraform.Validate(t, terraformOptions)
 }

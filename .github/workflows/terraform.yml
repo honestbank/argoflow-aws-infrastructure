@@ -2,25 +2,29 @@
 # When making any changes, please submit a PR to the file/repo above as well.
 #
 # Required variables/secrets:
-# TF_WORKSPACE: The Terraform Cloud workspace suffix (usually the stage/environment)
 # TF_API_TOKEN: Terraform Cloud API token
+#
+# Optional variables (add under `env:` if needed):
+# TF_WORKSPACE: The Terraform Cloud workspace suffix (usually the stage/environment - eg test, dev, qa, prod)
 
-name: Terraform GitHub Actions
-
+name: "Terraform GitHub Actions"
 on:
-  pull_request
-
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
 env:
-  tf_version: "0.15.0" # See https://github.com/hashicorp/terraform/issues/28524
+  tf_version: "latest"
   tf_working_dir: "."
-  TF_WORKSPACE: ${{ github.base_ref }}
 jobs:
   terraform:
     name: "Terraform - Format, Init, Validate, Plan, Fail on Change"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@master
         with:
           submodules: true
       - name: Set up Terraform
@@ -41,10 +45,9 @@ jobs:
         run: terraform validate -no-color
       - name: Terraform Plan
         id: plan
-        run: terraform plan
+        run: terraform plan -no-color
         continue-on-error: true
       - uses: actions/github-script@v4
-        continue-on-error: true
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
