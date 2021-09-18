@@ -53,7 +53,7 @@ The RDS needs to be provisioned into the same VPC as the Kubeflow EKS instance. 
 >
 > TODO: add variables for all application Kubernetes Service Account names (currently we make some assumptions like
 > using `cert-manager` as the Service Account and Namespace for [cert-manager](https://cert-manager.io)).
-> 
+>
 
 argoflow-aws requires IAM roles for various component/supporting applications. These can be found in [iam.tf](/iam.tf).
 
