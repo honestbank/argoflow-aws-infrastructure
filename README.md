@@ -6,6 +6,17 @@ organized by cloud provider and product/service (this might not be the best grou
 Current usage is specific to [argoflow-aws](https://github.com/argoflow/argoflow-aws) so the requirements are very closely
 tied to those specified in [their readme](https://github.com/argoflow/argoflow-aws/blob/master/README.md).
 
+## Prerequisites
+
+This module assumes that you have a vanilla EKS cluster running in a VPC with private and/or public subnets. From that point
+on, this module:
+
+* Tags the VPC and subnets
+* Creates an RDS instance
+* Creates a Redis Elasticache instance
+* Creates IAM roles and policies and the required attachments
+* Creates AWS Secrets Manager Secrets
+
 ## EKS
 
 The EKS is build is handled by [api-cloud-infrastructure](https://github.com/honestbank/api-cloud-infrastructure). Some outputs
