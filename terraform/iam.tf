@@ -444,11 +444,30 @@ resource "aws_iam_user" "kubeflow_pipelines_user" {
   }
 }
 
+data "aws_iam_policy_document" "s3_access_policy_document" {
+  version = "2012-10-17"
+
+  statement {
+    actions   = ["s3:List*"]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+
+  statement {
+    actions = ["s3:*Object"]
+    effect  = "Allow"
+    resources = [
+      "${aws_s3_bucket.kubeflow_pipelines_s3_bucket.arn}/*",
+      "${aws_s3_bucket.kubeflow_mlflow_s3_bucket.arn}/*",
+    ]
+  }
+}
+
 resource "aws_iam_user_policy" "kubeflow_pipelines_user_policy" {
   name = "kubeflow_pipelines_user_policy"
   user = aws_iam_user.kubeflow_pipelines_user.name
 
-  policy = file("${path.module}/../iam-policies/pipelines-iam-user-s3-access.json")
+  policy = data.aws_iam_policy_document.s3_access_policy_document.json
 }
 
 resource "aws_iam_access_key" "kubeflow_pipelines_user_credentials" {

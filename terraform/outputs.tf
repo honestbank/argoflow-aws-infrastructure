@@ -58,14 +58,24 @@ output "kubeflow_external_secrets_monitoring_role_arn" {
   value       = aws_iam_role.external_secrets_monitoring_role.arn
 }
 
-output "kubeflow_redis_oidc_cache_nodes" {
-  description = "The nodes of the Kubeflow redis cache to be used for OIDC"
-  value       = aws_elasticache_cluster.kubeflow_oidc_cache.cache_nodes
+output "kubeflow_mlflow_s3_bucket_name" {
+  description = "S3 bucket for MLFlow"
+  value       = aws_s3_bucket.kubeflow_mlflow_s3_bucket.id
 }
 
 output "kubeflow_oidc_cookie_secret" {
   description = "The cookie secret to inject into argoflow-aws OIDC setup"
   value       = random_id.kubeflow_oidc_cookie_secret.hex
+}
+
+output "kubeflow_pipelines_s3_bucket_name" {
+  description = "S3 bucket for Kubeflow Pipelines"
+  value       = aws_s3_bucket.kubeflow_pipelines_s3_bucket.id
+}
+
+output "kubeflow_redis_oidc_cache_nodes" {
+  description = "The nodes of the Kubeflow redis cache to be used for OIDC"
+  value       = aws_elasticache_cluster.kubeflow_oidc_cache.cache_nodes
 }
 
 output "secretsmanager_secrets" {

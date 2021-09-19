@@ -68,3 +68,49 @@ resource "aws_elasticache_cluster" "kubeflow_oidc_cache" {
   security_group_ids = [var.aws_eks_cluster_primary_security_group_id]
   subnet_group_name  = aws_elasticache_subnet_group.kubeflow_oidc_cache_subnet_group.name
 }
+
+# ######################################################################################################################
+# S3 Buckets for MLFlow and Pipelines
+# ######################################################################################################################
+
+resource "random_id" "kubeflow_pipelines_s3_bucket_suffix" {
+  byte_length = 4
+}
+
+resource "aws_s3_bucket" "kubeflow_pipelines_s3_bucket" {
+  bucket = "kubeflow_pipelines_s3_bucket-${random_id.kubeflow_pipelines_s3_bucket_suffix.hex}"
+  acl    = "private"
+
+  tags = {
+    Terraform = "true"
+    Stage     = var.stage
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "kubeflow_pipelines_s3_bucket_public_access_block" {
+  bucket = aws_s3_bucket.kubeflow_pipelines_s3_bucket.id
+
+  block_public_acls   = true
+  block_public_policy = true
+}
+
+resource "random_id" "kubeflow_mlflow_s3_bucket_suffix" {
+  byte_length = 4
+}
+
+resource "aws_s3_bucket" "kubeflow_mlflow_s3_bucket" {
+  bucket = "kubeflow_pipelines_s3_bucket-${random_id.kubeflow_mlflow_s3_bucket_suffix.hex}"
+  acl    = "private"
+
+  tags = {
+    Terraform = "true"
+    Stage     = var.stage
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "kubeflow_mlflow_s3_bucket_public_access_block" {
+  bucket = aws_s3_bucket.kubeflow_mlflow_s3_bucket.id
+
+  block_public_acls   = true
+  block_public_policy = true
+}

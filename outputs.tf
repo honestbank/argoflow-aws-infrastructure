@@ -63,9 +63,19 @@ output "kubeflow_redis_oidc_cache_nodes" {
   value       = module.argoflow_aws_infrastructure.kubeflow_redis_oidc_cache_nodes
 }
 
+output "kubeflow_mlflow_s3_bucket_name" {
+  description = "S3 bucket for MLFlow"
+  value       = module.argoflow_aws_infrastructure.kubeflow_mlflow_s3_bucket_name
+}
+
 output "kubeflow_oidc_cookie_secret" {
   description = "The cookie secret to inject into argoflow-aws OIDC setup"
   value       = module.argoflow_aws_infrastructure.kubeflow_oidc_cookie_secret
+}
+
+output "kubeflow_pipelines_s3_bucket_name" {
+  description = "S3 bucket for Kubeflow Pipelines"
+  value       = module.argoflow_aws_infrastructure.kubeflow_pipelines_s3_bucket_name
 }
 
 output "secretsmanager_secrets" {

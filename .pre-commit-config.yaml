@@ -16,7 +16,7 @@ repos:
     - id: terraform_validate
 
 # These two hooks are flakey, disabling for now
-    - id: terraform_tfsec
+#    - id: terraform_tfsec
 #    - id: checkov
 
   # The revision doesn't get updated manually

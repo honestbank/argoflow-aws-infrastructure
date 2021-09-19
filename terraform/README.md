@@ -82,8 +82,14 @@ No modules.
 | [aws_iam_user.kubeflow_pipelines_user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy.kubeflow_pipelines_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy) | resource |
 | [aws_kms_key.kubeflow_secrets_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
+| [aws_s3_bucket.kubeflow_mlflow_s3_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
+| [aws_s3_bucket.kubeflow_pipelines_s3_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
+| [aws_s3_bucket_public_access_block.kubeflow_mlflow_s3_bucket_public_access_block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
+| [aws_s3_bucket_public_access_block.kubeflow_pipelines_s3_bucket_public_access_block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
 | [aws_secretsmanager_secret.kubeflow_secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
+| [random_id.kubeflow_mlflow_s3_bucket_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.kubeflow_oidc_cookie_secret](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
+| [random_id.kubeflow_pipelines_s3_bucket_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.secrets_suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [aws_iam_policy_document.aws_load_balancer_controller_assume_role_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.cert_manager_irsa_assume_role_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
@@ -93,6 +99,7 @@ No modules.
 | [aws_iam_policy_document.external_dns_infrastructure_access_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.external_secrets_assume_role_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.external_secrets_infrastructure_access_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
+| [aws_iam_policy_document.s3_access_policy_document](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_subnet.kubeflow_db_subnets](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
 
 ## Inputs
@@ -130,8 +137,10 @@ No modules.
 | <a name="output_kubeflow_external_secrets_kubeflow_role_arn"></a> [kubeflow\_external\_secrets\_kubeflow\_role\_arn](#output\_kubeflow\_external\_secrets\_kubeflow\_role\_arn) | IAM role allowing the external-secrets application to administer kubeflow secrets |
 | <a name="output_kubeflow_external_secrets_mlflow_policy_arn"></a> [kubeflow\_external\_secrets\_mlflow\_policy\_arn](#output\_kubeflow\_external\_secrets\_mlflow\_policy\_arn) | IAM role allowing the external-secrets application to administer mlflow secrets |
 | <a name="output_kubeflow_external_secrets_monitoring_role_arn"></a> [kubeflow\_external\_secrets\_monitoring\_role\_arn](#output\_kubeflow\_external\_secrets\_monitoring\_role\_arn) | IAM policy allowing the external-secrets application to administer monitoring secrets |
+| <a name="output_kubeflow_mlflow_s3_bucket_name"></a> [kubeflow\_mlflow\_s3\_bucket\_name](#output\_kubeflow\_mlflow\_s3\_bucket\_name) | S3 bucket for MLFlow |
 | <a name="output_kubeflow_oidc_cookie_secret"></a> [kubeflow\_oidc\_cookie\_secret](#output\_kubeflow\_oidc\_cookie\_secret) | The cookie secret to inject into argoflow-aws OIDC setup |
 | <a name="output_kubeflow_pipelines_aws_iam_username"></a> [kubeflow\_pipelines\_aws\_iam\_username](#output\_kubeflow\_pipelines\_aws\_iam\_username) | The username of the AWS IAM user for Kubeflow Pipelines |
+| <a name="output_kubeflow_pipelines_s3_bucket_name"></a> [kubeflow\_pipelines\_s3\_bucket\_name](#output\_kubeflow\_pipelines\_s3\_bucket\_name) | S3 bucket for Kubeflow Pipelines |
 | <a name="output_kubeflow_pipelines_user_credentials_access_key_id"></a> [kubeflow\_pipelines\_user\_credentials\_access\_key\_id](#output\_kubeflow\_pipelines\_user\_credentials\_access\_key\_id) | The access key ID for the AWS IAM user with permissions to the Kubeflow Pipelines S3 bucket |
 | <a name="output_kubeflow_pipelines_user_credentials_secret_access_key"></a> [kubeflow\_pipelines\_user\_credentials\_secret\_access\_key](#output\_kubeflow\_pipelines\_user\_credentials\_secret\_access\_key) | The secret access key for the AWS IAM user with permissions to the Kubeflow Pipelines S3 bucket |
 | <a name="output_kubeflow_rds_host"></a> [kubeflow\_rds\_host](#output\_kubeflow\_rds\_host) | The hostname of the Kubeflow RDS instance |
