@@ -50,7 +50,7 @@ resource "aws_db_instance" "kubeflow_db" {
 # ######################################################################################################################
 
 resource "aws_elasticache_subnet_group" "kubeflow_oidc_cache_subnet_group" {
-  name       = "kubeflow_oidc_cache_subnet_group"
+  name       = "kubeflow-oidc-cache-subnet-group"
   subnet_ids = data.aws_subnet.kubeflow_db_subnets.*.id
 }
 
