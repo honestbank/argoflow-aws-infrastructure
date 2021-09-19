@@ -1,16 +1,13 @@
-data "aws_subnet" "kubeflow_db_subnet_a" {
-  id = "subnet-9440efdc"
-}
 
-data "aws_subnet" "kubeflow_db_subnet_b" {
-  id = "subnet-d50cb3b3"
+data "aws_subnet" "kubeflow_db_subnets" {
+  count = length(var.aws_vpc_private_subnets)
+  id    = var.aws_vpc_private_subnets[count.index]
 }
-
 
 resource "aws_db_subnet_group" "kubeflow_db_subnet_group" {
   name        = "kubeflow-db-subnet-group"
   description = "Kubeflow RDS DB subnet group"
-  subnet_ids  = [data.aws_subnet.kubeflow_db_subnet_a.id, data.aws_subnet.kubeflow_db_subnet_b.id]
+  subnet_ids  = data.aws_subnet.kubeflow_db_subnets.*.id
 }
 
 resource "aws_db_instance" "kubeflow_db" {
