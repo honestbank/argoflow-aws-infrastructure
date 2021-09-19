@@ -5,6 +5,7 @@ module "argoflow_aws_infrastructure" {
   aws_load_balancer_controller_namespace                  = var.aws_load_balancer_controller_namespace
   aws_load_balancer_controller_service_account_name       = var.aws_load_balancer_controller_service_account_name
   aws_region                                              = var.aws_region
+  aws_secretsmanager_account_id                           = var.aws_secretsmanager_account_id
   aws_vpc_id                                              = var.aws_vpc_id
   aws_vpc_private_subnets                                 = var.aws_vpc_private_subnets
   aws_vpc_public_subnets                                  = var.aws_vpc_public_subnets

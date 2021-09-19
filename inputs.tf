@@ -24,6 +24,11 @@ variable "aws_region" {
   description = "The AWS region in which to build resources"
 }
 
+variable "aws_secretsmanager_account_id" {
+  type        = string
+  description = "The AWS account ID that hosts Secrets Manager resources"
+}
+
 variable "aws_vpc_id" {
   type        = string
   description = "The VPC ID where the argoflow-aws instance will be located"

@@ -245,11 +245,26 @@ data "aws_iam_policy_document" "external_secrets_assume_role_policy_document" {
   }
 }
 
+data "aws_iam_policy_document" "external_secrets_infrastructure_access_policy_document" {
+  version = "2012-10-17"
+
+  statement {
+    actions = [
+      "secretsmanager:ListSecretVersionIds",
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:GetResourcePolicy",
+      "secretsmanager:DescribeSecret"
+    ]
+    effect    = "Allow"
+    resources = ["arn:aws:secretsmanager:ap-southeast-1:${var.aws_secretsmanager_account_id}:secret:kubeflow*"]
+  }
+}
+
 resource "aws_iam_policy" "external_secrets_policy" {
   name        = "external_secrets_policy"
   description = "IAM Policy allowing the external-secrets application to administer infrastructure resources"
 
-  policy = file("${path.module}/../iam-policies/external-secrets-option-1.json")
+  policy = data.aws_iam_policy_document.external_secrets_infrastructure_access_policy_document.json
 }
 
 resource "aws_iam_role" "external_secrets_role" {
