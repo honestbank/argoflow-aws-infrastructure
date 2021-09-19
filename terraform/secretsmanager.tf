@@ -38,7 +38,7 @@ resource "aws_secretsmanager_secret" "kubeflow_secret" {
   count                   = length(var.external_secret_names)
   name                    = "kubeflow/${var.external_secret_names[count.index]}-${random_id.secrets_suffix.hex}"
   recovery_window_in_days = "0"
-  kms_key_id              = aws_kms_key.kubeflow_secrets_key
+  kms_key_id              = aws_kms_key.kubeflow_secrets_key.id
 }
 
 # This value needs to be placed into AWS Secrets Manager
