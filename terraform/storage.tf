@@ -78,7 +78,7 @@ resource "random_id" "kubeflow_pipelines_s3_bucket_suffix" {
 }
 
 resource "aws_s3_bucket" "kubeflow_pipelines_s3_bucket" {
-  bucket = "kubeflow_pipelines_s3_bucket-${random_id.kubeflow_pipelines_s3_bucket_suffix.hex}"
+  bucket = "kubeflow-pipelines-${random_id.kubeflow_pipelines_s3_bucket_suffix.hex}"
   acl    = "private"
 
   tags = {
@@ -99,7 +99,7 @@ resource "random_id" "kubeflow_mlflow_s3_bucket_suffix" {
 }
 
 resource "aws_s3_bucket" "kubeflow_mlflow_s3_bucket" {
-  bucket = "kubeflow_pipelines_s3_bucket-${random_id.kubeflow_mlflow_s3_bucket_suffix.hex}"
+  bucket = "kubeflow-mlflow-${random_id.kubeflow_mlflow_s3_bucket_suffix.hex}"
   acl    = "private"
 
   tags = {
