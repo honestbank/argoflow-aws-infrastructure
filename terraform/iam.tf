@@ -125,11 +125,39 @@ data "aws_iam_policy_document" "external_dns_assume_role_policy_document" {
   }
 }
 
+data "aws_iam_policy_document" "external_dns_infrastructure_access_policy_document" {
+  version = "2012-10-17"
+
+  statement {
+    actions   = ["route53:GetChange"]
+    effect    = "Allow"
+    resources = ["arn:aws:route53:::change/*"]
+  }
+
+  statement {
+    actions = [
+      "route53:ListResourceRecordSets",
+      "route53:ChangeResourceRecordSets"
+    ]
+    effect    = "Allow"
+    resources = ["arn:aws:route53:::hostedzone/${var.kubeflow_route53_hosted_zone_id}"]
+  }
+
+  statement {
+    actions = [
+      "route53:ListHostedZonesByName",
+      "route53:ListHostedZones"
+    ]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+}
+
 resource "aws_iam_policy" "external_dns_policy" {
   name        = "external_dns_policy"
   description = "IAM Policy allowing the external-dns application to administer infrastructure resources"
 
-  policy = file("${path.module}/../iam-policies/external-dns.json")
+  policy = data.aws_iam_policy_document.external_dns_infrastructure_access_policy_document.json
 }
 
 resource "aws_iam_role" "external_dns_role" {
