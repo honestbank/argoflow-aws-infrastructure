@@ -41,13 +41,18 @@ resource "aws_db_instance" "kubeflow_db" {
   ### ---
   publicly_accessible = false
   # Not sure where to get this in real-life
-  vpc_security_group_ids = ["sg-084510ba4c3fb28cc"]
+  vpc_security_group_ids = [var.aws_eks_cluster_primary_security_group_id]
   db_subnet_group_name   = aws_db_subnet_group.kubeflow_db_subnet_group.name
 }
 
 # ######################################################################################################################
 # Redis for OIDC
 # ######################################################################################################################
+
+resource "aws_elasticache_subnet_group" "kubeflow_oidc_cache_subnet_group" {
+  name       = "kubeflow_oidc_cache_subnet_group"
+  subnet_ids = data.aws_subnet.kubeflow_db_subnets.*.id
+}
 
 # This cluster is used for OIDC - AWS088 warns on snapshot retention, which is not needed.
 # tfsec:ignore:AWS088 (DO NOT ADD A BLANK LINE AFTER THIS)
@@ -61,4 +66,5 @@ resource "aws_elasticache_cluster" "kubeflow_oidc_cache" {
   port                 = 6379
 
   security_group_ids = [var.aws_eks_cluster_primary_security_group_id]
+  subnet_group_name  = aws_elasticache_subnet_group.kubeflow_oidc_cache_subnet_group.name
 }
