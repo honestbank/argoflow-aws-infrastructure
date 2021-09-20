@@ -13,6 +13,6 @@ module "argoflow_aws_infrastructure" {
   cluster_autoscaler_kubernetes_service_account_namespace = var.cluster_autoscaler_kubernetes_service_account_namespace
   eks_cluster_name                                        = var.eks_cluster_name
   kubeflow_cluster_oidc_provider_arn                      = var.kubeflow_cluster_oidc_provider_arn
-  kubeflow_route53_hosted_zone_id                         = var.kubeflow_route53_hosted_zone_id
+  route53_subdomain                                       = var.route53_subdomain
   stage                                                   = var.stage
 }

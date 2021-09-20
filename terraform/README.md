@@ -82,6 +82,7 @@ No modules.
 | [aws_iam_user.kubeflow_pipelines_user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy.kubeflow_pipelines_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy) | resource |
 | [aws_kms_key.kubeflow_secrets_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/kms_key) | resource |
+| [aws_route53_zone.argoflow_aws_subdomain](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_zone) | resource |
 | [aws_s3_bucket.kubeflow_mlflow_s3_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket.kubeflow_pipelines_s3_bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
 | [aws_s3_bucket_public_access_block.kubeflow_mlflow_s3_bucket_public_access_block](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
@@ -118,9 +119,9 @@ No modules.
 | <a name="input_cluster_autoscaler_kubernetes_service_account_namespace"></a> [cluster\_autoscaler\_kubernetes\_service\_account\_namespace](#input\_cluster\_autoscaler\_kubernetes\_service\_account\_namespace) | The Kubernetes Namespace in which the cluster-autoscaler Service Account is located | `string` | `"kube-system"` | no |
 | <a name="input_eks_cluster_name"></a> [eks\_cluster\_name](#input\_eks\_cluster\_name) | The name of the EKS (Elastic Kubernetes Service) cluster. | `string` | n/a | yes |
 | <a name="input_external_secret_names"></a> [external\_secret\_names](#input\_external\_secret\_names) | The secrets that need to be created in AWS Secrets Manager | `list(string)` | <pre>[<br>  "argocd/https_username",<br>  "argocd/https_password",<br>  "auth/client_id",<br>  "auth/client_secret",<br>  "auth/cookie_secret",<br>  "istio-system/auth_ca_cert",<br>  "istio-system/auth_cert",<br>  "istio-system/auth_cert_pk",<br>  "istio-system/gateway_ca_cert",<br>  "istio-system/gateway_cert",<br>  "istio-system/gateway_cert_pk",<br>  "istio-system/monitoring_ca_cert",<br>  "istio-system/monitoring_cert",<br>  "istio-system/monitoring_cert_pk",<br>  "kubeflow/rds_username",<br>  "kubeflow/rds_password",<br>  "kubeflow/s3_accesskey",<br>  "kubeflow/s3_secretkey",<br>  "mlflow/rds_username",<br>  "mlflow/rds_password"<br>]</pre> | no |
-| <a name="input_kubeflow_cluster_oidc_provider_arn"></a> [kubeflow\_cluster\_oidc\_provider\_arn](#input\_kubeflow\_cluster\_oidc\_provider\_arn) | The OIDC provider ARN of the Kubeflow Kubernetes cluster | `any` | n/a | yes |
-| <a name="input_kubeflow_route53_hosted_zone_id"></a> [kubeflow\_route53\_hosted\_zone\_id](#input\_kubeflow\_route53\_hosted\_zone\_id) | The AWS Route 53 Hosted Zone ID to be used for URLs for this Kubeflow instance | `any` | n/a | yes |
-| <a name="input_stage"></a> [stage](#input\_stage) | The stage (environment) of the build - usually one of [test, dev, qa, prod] | `any` | n/a | yes |
+| <a name="input_kubeflow_cluster_oidc_provider_arn"></a> [kubeflow\_cluster\_oidc\_provider\_arn](#input\_kubeflow\_cluster\_oidc\_provider\_arn) | The OIDC provider ARN of the Kubeflow Kubernetes cluster | `string` | n/a | yes |
+| <a name="input_route53_subdomain"></a> [route53\_subdomain](#input\_route53\_subdomain) | The subdomain to create in Route53 for this argoflow-aws instance | `string` | n/a | yes |
+| <a name="input_stage"></a> [stage](#input\_stage) | The stage (environment) of the build - usually one of [test, dev, qa, prod] | `string` | n/a | yes |
 
 ## Outputs
 
@@ -145,4 +146,7 @@ No modules.
 | <a name="output_kubeflow_pipelines_user_credentials_secret_access_key"></a> [kubeflow\_pipelines\_user\_credentials\_secret\_access\_key](#output\_kubeflow\_pipelines\_user\_credentials\_secret\_access\_key) | The secret access key for the AWS IAM user with permissions to the Kubeflow Pipelines S3 bucket |
 | <a name="output_kubeflow_rds_host"></a> [kubeflow\_rds\_host](#output\_kubeflow\_rds\_host) | The hostname of the Kubeflow RDS instance |
 | <a name="output_kubeflow_redis_oidc_cache_nodes"></a> [kubeflow\_redis\_oidc\_cache\_nodes](#output\_kubeflow\_redis\_oidc\_cache\_nodes) | The nodes of the Kubeflow redis cache to be used for OIDC |
+| <a name="output_kubeflow_route53_zone_id"></a> [kubeflow\_route53\_zone\_id](#output\_kubeflow\_route53\_zone\_id) | The ID of the AWS Route 53 zone created for this Kubeflow instance |
+| <a name="output_kubeflow_route53_zone_name"></a> [kubeflow\_route53\_zone\_name](#output\_kubeflow\_route53\_zone\_name) | The name of the AWS Route 53 zone created for this Kubeflow instance |
+| <a name="output_kubeflow_route53_zone_nameservers"></a> [kubeflow\_route53\_zone\_nameservers](#output\_kubeflow\_route53\_zone\_nameservers) | The nameservers of the AWS Route 53 zone created for this Kubeflow instance |
 | <a name="output_secretsmanager_secrets"></a> [secretsmanager\_secrets](#output\_secretsmanager\_secrets) | The AWS Secrets Manager secrets created for Kubeflow |

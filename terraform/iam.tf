@@ -140,7 +140,7 @@ data "aws_iam_policy_document" "external_dns_infrastructure_access_policy_docume
       "route53:ChangeResourceRecordSets"
     ]
     effect    = "Allow"
-    resources = ["arn:aws:route53:::hostedzone/${var.kubeflow_route53_hosted_zone_id}"]
+    resources = ["arn:aws:route53:::hostedzone/${aws_route53_zone.argoflow_aws_subdomain.zone_id}"]
   }
 
   statement {
@@ -257,6 +257,15 @@ data "aws_iam_policy_document" "external_secrets_infrastructure_access_policy_do
     ]
     effect    = "Allow"
     resources = ["arn:aws:secretsmanager:ap-southeast-1:${var.aws_secretsmanager_account_id}:secret:kubeflow*"]
+  }
+
+  statement {
+    actions = [
+      "kms:Decrypt",
+      "kms:DescribeKey"
+    ]
+    effect    = "Allow"
+    resources = ["arn:aws:kms:us-east-1:${var.aws_secretsmanager_account_id}:key/${aws_kms_key.kubeflow_secrets_key.id}"]
   }
 }
 

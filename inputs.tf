@@ -66,8 +66,9 @@ variable "kubeflow_cluster_oidc_provider_arn" {
   description = "The OIDC provider ARN of the Kubeflow Kubernetes cluster"
 }
 
-variable "kubeflow_route53_hosted_zone_id" {
-  description = "The AWS Route 53 Hosted Zone ID to be used for URLs for this Kubeflow instance"
+variable "route53_subdomain" {
+  type        = string
+  description = "The subdomain to create in Route53 for this argoflow-aws instance"
 }
 
 variable "stage" {
