@@ -2,6 +2,11 @@
 # argoflow-aws-infrastructure input variables
 # ###################################################################################################################
 
+variable "aws_eks_cluster_primary_security_group_id" {
+  type        = string
+  description = "Corresponds to the `cluster_primary_security_group_id` [output variable of the AWS EKS Terraform module](https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest?tab=outputs)"
+}
+
 variable "aws_load_balancer_controller_namespace" {
   type        = string
   description = "The Kubernetes Namespace containing the aws-load-balancer-controller KSA (Kubernetes Service Account)"
@@ -19,6 +24,11 @@ variable "aws_region" {
   description = "The AWS region in which to build resources"
 }
 
+variable "aws_secretsmanager_account_id" {
+  type        = string
+  description = "The AWS account ID that hosts Secrets Manager resources"
+}
+
 variable "aws_vpc_id" {
   type        = string
   description = "The VPC ID where the argoflow-aws instance will be located"
@@ -33,6 +43,8 @@ variable "aws_vpc_public_subnets" {
   type        = list(string)
   description = "A list of the public VPC subnet IDs used by the Kubeflow EKS cluster"
 }
+
+
 
 # Kubernetes Cluster Autoscaler: https://github.com/kubernetes/autoscaler
 # Cluster Autoscaler YAML: https://raw.githubusercontent.com/kubernetes/autoscaler/master/cluster-autoscaler/cloudprovider/aws/examples/cluster-autoscaler-autodiscover.yaml
@@ -54,6 +66,10 @@ variable "eks_cluster_name" {
 
 variable "kubeflow_cluster_oidc_provider_arn" {
   description = "The OIDC provider ARN of the Kubeflow Kubernetes cluster"
+}
+
+variable "kubeflow_route53_hosted_zone_id" {
+  description = "The AWS Route 53 Hosted Zone ID to be used for URLs for this Kubeflow instance"
 }
 
 variable "stage" {

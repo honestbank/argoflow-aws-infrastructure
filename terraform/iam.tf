@@ -125,11 +125,39 @@ data "aws_iam_policy_document" "external_dns_assume_role_policy_document" {
   }
 }
 
+data "aws_iam_policy_document" "external_dns_infrastructure_access_policy_document" {
+  version = "2012-10-17"
+
+  statement {
+    actions   = ["route53:GetChange"]
+    effect    = "Allow"
+    resources = ["arn:aws:route53:::change/*"]
+  }
+
+  statement {
+    actions = [
+      "route53:ListResourceRecordSets",
+      "route53:ChangeResourceRecordSets"
+    ]
+    effect    = "Allow"
+    resources = ["arn:aws:route53:::hostedzone/${var.kubeflow_route53_hosted_zone_id}"]
+  }
+
+  statement {
+    actions = [
+      "route53:ListHostedZonesByName",
+      "route53:ListHostedZones"
+    ]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+}
+
 resource "aws_iam_policy" "external_dns_policy" {
   name        = "external_dns_policy"
   description = "IAM Policy allowing the external-dns application to administer infrastructure resources"
 
-  policy = file("${path.module}/../iam-policies/external-dns.json")
+  policy = data.aws_iam_policy_document.external_dns_infrastructure_access_policy_document.json
 }
 
 resource "aws_iam_role" "external_dns_role" {
@@ -217,11 +245,26 @@ data "aws_iam_policy_document" "external_secrets_assume_role_policy_document" {
   }
 }
 
+data "aws_iam_policy_document" "external_secrets_infrastructure_access_policy_document" {
+  version = "2012-10-17"
+
+  statement {
+    actions = [
+      "secretsmanager:ListSecretVersionIds",
+      "secretsmanager:GetSecretValue",
+      "secretsmanager:GetResourcePolicy",
+      "secretsmanager:DescribeSecret"
+    ]
+    effect    = "Allow"
+    resources = ["arn:aws:secretsmanager:ap-southeast-1:${var.aws_secretsmanager_account_id}:secret:kubeflow*"]
+  }
+}
+
 resource "aws_iam_policy" "external_secrets_policy" {
   name        = "external_secrets_policy"
   description = "IAM Policy allowing the external-secrets application to administer infrastructure resources"
 
-  policy = file("${path.module}/../iam-policies/external-secrets-option-1.json")
+  policy = data.aws_iam_policy_document.external_secrets_infrastructure_access_policy_document.json
 }
 
 resource "aws_iam_role" "external_secrets_role" {
@@ -401,11 +444,30 @@ resource "aws_iam_user" "kubeflow_pipelines_user" {
   }
 }
 
+data "aws_iam_policy_document" "s3_access_policy_document" {
+  version = "2012-10-17"
+
+  statement {
+    actions   = ["s3:List*"]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+
+  statement {
+    actions = ["s3:*Object"]
+    effect  = "Allow"
+    resources = [
+      "${aws_s3_bucket.kubeflow_pipelines_s3_bucket.arn}/*",
+      "${aws_s3_bucket.kubeflow_mlflow_s3_bucket.arn}/*",
+    ]
+  }
+}
+
 resource "aws_iam_user_policy" "kubeflow_pipelines_user_policy" {
   name = "kubeflow_pipelines_user_policy"
   user = aws_iam_user.kubeflow_pipelines_user.name
 
-  policy = file("${path.module}/../iam-policies/pipelines-iam-user-s3-access.json")
+  policy = data.aws_iam_policy_document.s3_access_policy_document.json
 }
 
 resource "aws_iam_access_key" "kubeflow_pipelines_user_credentials" {
