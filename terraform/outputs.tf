@@ -80,7 +80,7 @@ output "kubeflow_redis_oidc_cache_nodes" {
 
 output "secretsmanager_secrets" {
   description = "The AWS Secrets Manager secrets created for Kubeflow"
-  value       = ["${aws_secretsmanager_secret.kubeflow_secret.*.id}"]
+  value       = ["${aws_secretsmanager_secret.kubeflow_secret.*.name}"]
 }
 
 output "kubeflow_pipelines_aws_iam_username" {
