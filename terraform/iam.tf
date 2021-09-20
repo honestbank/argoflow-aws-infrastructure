@@ -258,6 +258,15 @@ data "aws_iam_policy_document" "external_secrets_infrastructure_access_policy_do
     effect    = "Allow"
     resources = ["arn:aws:secretsmanager:ap-southeast-1:${var.aws_secretsmanager_account_id}:secret:kubeflow*"]
   }
+
+  statement {
+    actions = [
+      "kms:Decrypt",
+      "kms:DescribeKey"
+    ]
+    effect    = "Allow"
+    resources = ["arn:aws:kms:us-east-1:${var.aws_secretsmanager_account_id}:key/${aws_kms_key.kubeflow_secrets_key.id}"]
+  }
 }
 
 resource "aws_iam_policy" "external_secrets_policy" {
