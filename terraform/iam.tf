@@ -140,7 +140,7 @@ data "aws_iam_policy_document" "external_dns_infrastructure_access_policy_docume
       "route53:ChangeResourceRecordSets"
     ]
     effect    = "Allow"
-    resources = ["arn:aws:route53:::hostedzone/${var.kubeflow_route53_hosted_zone_id}"]
+    resources = ["arn:aws:route53:::hostedzone/${aws_route53_zone.argoflow_aws_subdomain.zone_id}"]
   }
 
   statement {

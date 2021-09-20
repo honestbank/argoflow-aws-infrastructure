@@ -44,17 +44,17 @@ variable "aws_vpc_public_subnets" {
   description = "A list of the public VPC subnet IDs used by the Kubeflow EKS cluster"
 }
 
-
-
 # Kubernetes Cluster Autoscaler: https://github.com/kubernetes/autoscaler
 # Cluster Autoscaler YAML: https://raw.githubusercontent.com/kubernetes/autoscaler/master/cluster-autoscaler/cloudprovider/aws/examples/cluster-autoscaler-autodiscover.yaml
 
 variable "cluster_autoscaler_kubernetes_service_account_name" {
+  type        = string
   description = "The Kubernetes Service Account used by the cluster-autoscaler pod"
   default     = "cluster-autoscaler"
 }
 
 variable "cluster_autoscaler_kubernetes_service_account_namespace" {
+  type        = string
   description = "The Kubernetes Namespace in which the cluster-autoscaler Service Account is located"
   default     = "kube-system"
 }
@@ -65,13 +65,16 @@ variable "eks_cluster_name" {
 }
 
 variable "kubeflow_cluster_oidc_provider_arn" {
+  type        = string
   description = "The OIDC provider ARN of the Kubeflow Kubernetes cluster"
 }
 
-variable "kubeflow_route53_hosted_zone_id" {
-  description = "The AWS Route 53 Hosted Zone ID to be used for URLs for this Kubeflow instance"
+variable "route53_subdomain" {
+  type        = string
+  description = "The subdomain to create in Route53 for this argoflow-aws instance"
 }
 
 variable "stage" {
+  type        = string
   description = "The stage (environment) of the build - usually one of [test, dev, qa, prod]"
 }

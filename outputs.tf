@@ -98,3 +98,18 @@ output "kubeflow_pipelines_user_credentials_secret_access_key" {
   sensitive   = true
   value       = module.argoflow_aws_infrastructure.kubeflow_pipelines_user_credentials_secret_access_key
 }
+
+output "kubeflow_route53_zoneid" {
+  description = "The Zone ID of the AWS Route 53 zone created for this Kubeflow instance"
+  value       = module.argoflow_aws_infrastructure.kubeflow_route53_zone_id
+}
+
+output "kubeflow_route53_zone_name" {
+  description = "The name of the AWS Route 53 zone created for this Kubeflow instance"
+  value       = module.argoflow_aws_infrastructure.kubeflow_route53_zone_name
+}
+
+output "kubeflow_route53_zone_nameservers" {
+  description = "The nameservers of the AWS Route 53 zone created for this Kubeflow instance"
+  value       = module.argoflow_aws_infrastructure.kubeflow_route53_zone_nameservers
+}
