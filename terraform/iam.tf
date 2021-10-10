@@ -265,7 +265,7 @@ data "aws_iam_policy_document" "external_secrets_infrastructure_access_policy_do
       "kms:DescribeKey"
     ]
     effect    = "Allow"
-    resources = ["arn:aws:kms:us-east-1:${var.aws_secretsmanager_account_id}:key/${aws_kms_key.kubeflow_secrets_key.id}"]
+    resources = ["arn:aws:kms:ap-southeast-1:${var.aws_secretsmanager_account_id}:key/${aws_kms_key.kubeflow_secrets_key.id}"]
   }
 }
 
