@@ -38,7 +38,7 @@ output "kubeflow_external_secrets_kubeflow_role_arn" {
   value       = aws_iam_role.external_secrets_kubeflow_role.arn
 }
 
-output "kubeflow_external_secrets_mlflow_policy_arn" {
+output "kubeflow_external_secrets_mlflow_role_arn" {
   description = "IAM role allowing the external-secrets application to administer mlflow secrets"
   value       = aws_iam_role.external_secrets_mlflow_role.arn
 }
