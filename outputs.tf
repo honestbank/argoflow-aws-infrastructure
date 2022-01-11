@@ -38,9 +38,9 @@ output "kubeflow_external_secrets_kubeflow_role_arn" {
   value       = module.argoflow_aws_infrastructure.kubeflow_external_secrets_kubeflow_role_arn
 }
 
-output "kubeflow_external_secrets_mlflow_policy_arn" {
+output "kubeflow_external_secrets_mlflow_role_arn" {
   description = "IAM role allowing the external-secrets application to administer mlflow secrets"
-  value       = module.argoflow_aws_infrastructure.kubeflow_external_secrets_mlflow_policy_arn
+  value       = module.argoflow_aws_infrastructure.kubeflow_external_secrets_mlflow_role_arn
 }
 
 output "kubeflow_external_secrets_auth_role_arn" {
