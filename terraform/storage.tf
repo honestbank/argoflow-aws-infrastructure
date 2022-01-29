@@ -104,6 +104,10 @@ resource "aws_elasticache_cluster" "kubeflow_oidc_cache" {
 
   security_group_ids = [var.aws_eks_cluster_primary_security_group_id]
   subnet_group_name  = aws_elasticache_subnet_group.kubeflow_oidc_cache_subnet_group.name
+
+  ### Backups
+  ### ---
+  snapshot_retention_limit = 5
 }
 
 # ######################################################################################################################
