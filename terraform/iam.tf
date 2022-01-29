@@ -445,12 +445,8 @@ resource "aws_iam_role_policy_attachment" "external_secrets_monitoring_role_poli
 # IAM User for Pipelines Bucket
 # ######################################################################################################################
 
-resource "aws_iam_user" "kubeflow_pipelines_user" {
-  name = "kubeflow-pipelines"
-
-  tags = {
-    Terraform = "true"
-  }
+resource "aws_iam_group" "kubeflow_pipelines_users_group" {
+  name = "kubeflow_pipelines_users_group"
 }
 
 data "aws_iam_policy_document" "s3_access_policy_document" {
@@ -472,11 +468,28 @@ data "aws_iam_policy_document" "s3_access_policy_document" {
   }
 }
 
-resource "aws_iam_user_policy" "kubeflow_pipelines_user_policy" {
-  name = "kubeflow_pipelines_user_policy"
-  user = aws_iam_user.kubeflow_pipelines_user.name
-
+resource "aws_iam_policy" "kubeflow_pipelines_s3_access_policy" {
+  name   = "kubeflow_pipelines_s3_access_policy"
   policy = data.aws_iam_policy_document.s3_access_policy_document.json
+}
+
+resource "aws_iam_group_policy_attachment" "kubeflow_pipelines_users_group_policy_attachment" {
+  group      = aws_iam_group.kubeflow_pipelines_users_group.name
+  policy_arn = aws_iam_policy.kubeflow_pipelines_s3_access_policy.arn
+}
+
+resource "aws_iam_user" "kubeflow_pipelines_user" {
+  name = "kubeflow-pipelines"
+
+  tags = {
+    Terraform = "true"
+  }
+}
+
+resource "aws_iam_group_membership" "kubeflow_pipelines_user_group_membership" {
+  name  = "kubeflow_pipelines_user_group_membership"
+  users = toset([aws_iam_user.kubeflow_pipelines_user.name])
+  group = aws_iam_group.kubeflow_pipelines_users_group.name
 }
 
 resource "aws_iam_access_key" "kubeflow_pipelines_user_credentials" {
