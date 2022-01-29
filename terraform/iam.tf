@@ -77,7 +77,11 @@ data "aws_iam_policy_document" "cluster_autoscaler_infrastructure_access_policy_
       "autoscaling:TerminateInstanceInAutoScalingGroup",
       "ec2:DescribeLaunchTemplateVersions"
     ]
-    effect    = "Allow"
+    effect = "Allow"
+
+    # AWS examples also use ["*"] for resources:
+    # https://docs.aws.amazon.com/autoscaling/plans/userguide/security_iam_id-based-policy-examples.html
+    # checkov:skip=CKV_AWS_111:Ensure IAM policies does not allow write access without constraint
     resources = ["*"]
   }
 }
