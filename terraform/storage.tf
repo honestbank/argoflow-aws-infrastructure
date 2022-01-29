@@ -10,11 +10,41 @@ resource "aws_db_subnet_group" "kubeflow_db_subnet_group" {
   subnet_ids  = data.aws_subnet.kubeflow_db_subnets.*.id
 }
 
+################################################################################
+# Create an IAM role to allow enhanced monitoring
+################################################################################
+
+resource "aws_iam_role" "rds_enhanced_monitoring" {
+  name_prefix        = "rds-enhanced-monitoring-"
+  assume_role_policy = data.aws_iam_policy_document.rds_enhanced_monitoring.json
+}
+
+resource "aws_iam_role_policy_attachment" "rds_enhanced_monitoring" {
+  role       = aws_iam_role.rds_enhanced_monitoring.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
+}
+
+data "aws_iam_policy_document" "rds_enhanced_monitoring" {
+  statement {
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["monitoring.rds.amazonaws.com"]
+    }
+  }
+}
+
 resource "aws_db_instance" "kubeflow_db" {
 
-  name           = "kubeflow"
-  instance_class = "db.t3.micro"
-  multi_az       = false
+  name                = "kubeflow"
+  instance_class      = "db.t3.micro"
+  multi_az            = var.stage == "prod" ? true : false
+  deletion_protection = true
 
   ### Engine
   ### ---
@@ -26,8 +56,9 @@ resource "aws_db_instance" "kubeflow_db" {
   ### Auth
   ### ---
   # TODO: randomize or secure this somehow
-  username = "kubeflow"
-  password = "kubeflow" #tfsec:ignore:GEN003
+  username                            = "kubeflow"
+  password                            = "kubeflow" #tfsec:ignore:GEN003
+  iam_database_authentication_enabled = true
 
   ### Storage
   ### ---
@@ -43,6 +74,12 @@ resource "aws_db_instance" "kubeflow_db" {
   # Not sure where to get this in real-life
   vpc_security_group_ids = [var.aws_eks_cluster_primary_security_group_id]
   db_subnet_group_name   = aws_db_subnet_group.kubeflow_db_subnet_group.name
+
+  ### Logging
+  ### ---
+  enabled_cloudwatch_logs_exports = ["audit", "error", "general", "slowquery"]
+  monitoring_interval             = 60
+  monitoring_role_arn             = aws_iam_role.rds_enhanced_monitoring.arn
 }
 
 # ######################################################################################################################
@@ -67,6 +104,10 @@ resource "aws_elasticache_cluster" "kubeflow_oidc_cache" {
 
   security_group_ids = [var.aws_eks_cluster_primary_security_group_id]
   subnet_group_name  = aws_elasticache_subnet_group.kubeflow_oidc_cache_subnet_group.name
+
+  ### Backups
+  ### ---
+  snapshot_retention_limit = 5
 }
 
 # ######################################################################################################################
